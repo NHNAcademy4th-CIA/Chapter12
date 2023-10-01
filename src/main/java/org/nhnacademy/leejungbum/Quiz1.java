@@ -1,7 +1,12 @@
 package org.nhnacademy.leejungbum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Quiz1 {
-    public Quiz1(){
+    private static Logger logger = LoggerFactory.getLogger(Quiz1.class);
+
+    public Quiz1() {
         int numberOfThreads = 100;
         int numberOfIncrements = 100;
         customThread[] workers = new customThread[numberOfThreads];
@@ -14,15 +19,12 @@ public class Quiz1 {
         for (int i = 0; i < numberOfThreads; i++) {
             try {
                 workers[i].join();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
             }
         }
 
-        System.out.println("예상 값 : "
-                + (numberOfIncrements*numberOfThreads));
-        System.out.println("실제 값: " + counter.getCount());
-
+        logger.info("예상 값 : {}", numberOfIncrements * numberOfThreads);
+        logger.info("실제 값: {}", counter.getCount());
 
     }
 
@@ -35,12 +37,14 @@ class customThread extends Thread {
         }
     }
 }
-class Counter{
+
+class Counter {
     private static int count;
 
     public static void inc() {
-        count = count+1;
+        count = count + 1;
     }
+
     public static int getCount() {
         return count;
     }

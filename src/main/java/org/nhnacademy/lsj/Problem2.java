@@ -97,7 +97,7 @@ public class Problem2 {
         }
 
         long elapsedTime = System.currentTimeMillis() - startTime;
-
+        logger.info("가장 제수 많은 정수 {} \n 이 정수의 제수 개수 {}", maxDivisorsCountNumber, divisorCount)
         logger.info("Total elapsed time : {}  seconds", elapsedTime / 1000.0);
 
 //        long startTime2 = System.currentTimeMillis();

@@ -77,10 +77,11 @@ public class Problem2 {
                 try {
                     countPrimesTasks[i].join();
                 } catch (InterruptedException e) {
-                    logger.warn("에러발생");
+                    logger.warn("{}", e.getMessage());
                 }
             }
         }
+
 
         int maxDivisorsCountNumber = 0;
         int divisorCount = 0;
@@ -95,11 +96,28 @@ public class Problem2 {
             }
         }
 
-        logger.info("가장 제수 많은 정수 {} \n 이 정수의 제수 개수 {}", maxDivisorsCountNumber, divisorCount);
-
         long elapsedTime = System.currentTimeMillis() - startTime;
 
         logger.info("Total elapsed time : {}  seconds", elapsedTime / 1000.0);
+
+//        long startTime2 = System.currentTimeMillis();
+//
+//        int maxCount = 0;
+//        int id = 1;
+//        for (int i = 1; i <= 10000; i++) {
+//            int cnt = countDivisor(i); // 1부터 i까지의 약수 개수
+//
+//            if (maxCount < cnt) {
+//                maxCount = cnt;
+//                id = i;
+//            }
+//        }
+//
+//
+//        long elapsedTime2 = System.currentTimeMillis() - startTime2;
+//        logger.info("가장 제수 많은 정수 {} \n 이 정수의 제수 개수 {}", maxCount, id);
+//        logger.info("Total elapsed time : {}  seconds", elapsedTime2 / 1000.0);
+
 
     }
 

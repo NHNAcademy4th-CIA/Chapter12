@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class Problem2 {
 
-    private static final int UNIT = 1000;
+    private static final int UNIT = 10000;
 
     private static final int SIZE = 10;
 

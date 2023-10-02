@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ArrayBlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +21,18 @@ public class Server {
 
     private static final String path = "src/main/java/org/nhnacademy/lsj";
 
+    private static ArrayBlockingQueue<Socket> connectionQueue;
+
+
     public static void main(String[] args) {
 
+        connectionQueue = new ArrayBlockingQueue<>(10);
+        // 10보다 큰 수의 클라이언트가 대기하면  , 접근 차단함 , 대기열의 크기가 10인 것
+
+        for (int i = 0; i < 5; i++) { // 쓰레드 풀의 쓰레드 수 가 5개 , 이걸 가지고 돌려서 써먹을꺼임
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            connectionHandler.start();
+        } // 즉 한번에 5개 클라이언트 받기 가능 함 , 그 이후부터는 대기열에 쌓일 꺼임
 
         ServerSocket server;
 
@@ -34,9 +45,7 @@ public class Server {
 
             while (true) {
                 connection = server.accept();
-
-                ConnectionHandler connectionHandler = new ConnectionHandler(connection);
-                connectionHandler.start();
+                connectionQueue.add(connection); // 대기열에 작업 추가
             }
         } catch (Exception e) {
             logger.warn("서버 다운");
@@ -122,15 +131,24 @@ public class Server {
     }
 
     private static class ConnectionHandler extends Thread {
-        Socket client;
 
-        ConnectionHandler(Socket socket) {
-            client = socket;
+        ConnectionHandler() {
+            setDaemon(true);
         }
 
         public void run() {
 
-            sendData(client);
+            while (true) {
+                Socket socket = null;
+                try {
+                    socket = connectionQueue.take();
+                    sendData(socket);
+                } catch (InterruptedException e) {
+                    logger.warn("{}", e.getMessage());
+                }
+
+            }
+
         }
     }
 

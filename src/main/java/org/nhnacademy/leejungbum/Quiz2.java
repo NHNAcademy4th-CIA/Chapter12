@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Quiz2 {
-    public Quiz2(){
+    public Quiz2() {
         new ThreadTest2();
     }
 }
@@ -14,10 +14,12 @@ class ThreadTest2 {
     private static final Logger logger = LoggerFactory.getLogger(Quiz2.class);
     private static final int RANGE = 10000;
     private static int maxDivisors = 0;
+    private static int maxDivisorsIndex = 0;
 
     private static class CountDivisrThread extends Thread {
         private int start;
         private int end;
+
         public CountDivisrThread(int start, int end) {
             this.start = start;
             this.end = end;
@@ -29,8 +31,9 @@ class ThreadTest2 {
                 int cnt = divisorSize(i);
                 if (maxDivisors < cnt) {
                     maxDivisors = cnt;
+                    maxDivisorsIndex = i;
                 }
-                logger.info("{} : {}",i, cnt);
+                logger.info("{} : {}", i, cnt);
             }
         }
     }
@@ -44,6 +47,7 @@ class ThreadTest2 {
         }
         return count;
     }
+
     public ThreadTest2() {
 
         long startTime = System.currentTimeMillis();
@@ -67,7 +71,7 @@ class ThreadTest2 {
             }
         }
         long cTime = System.currentTimeMillis() - startTime;
-        logger.info("약수를 가장 많이 가진 수 {}", maxDivisors);
+        logger.info("약수를 가장 많이 가진 수 {} : 약수 갯수 {}", maxDivisorsIndex, maxDivisors);
         logger.info("총 걸린 시간 : {}", cTime / 1000.0);
 
     }

@@ -48,7 +48,7 @@ class ThreadTest3 {
             }
 
 
-            public void run() {
+            public void compute() {
 
                 for (int i = start; i <= end; i++) {
                     int cnt = divisorSize(i);
@@ -68,7 +68,7 @@ class ThreadTest3 {
                 if (task == null) {
                     break;
                 }
-                task.run();
+                task.compute();
             }
         }
     }

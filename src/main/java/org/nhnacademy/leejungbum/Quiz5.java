@@ -76,9 +76,9 @@ public class Quiz5 {
     }
 
     /***
-     *
-     * @param directory
-     * @param connection
+     * 연결
+     * @param directory 디렉토리
+     * @param connection 연결
      */
     private static void handleConnection(File directory, Socket connection) {
         Scanner incoming;
@@ -110,6 +110,12 @@ public class Quiz5 {
         }
     }
 
+    /***
+     * 파일 리스트 전송
+     * @param directory 디렉토리
+     * @param outgoing 보내는쪽
+     * @throws Exception 파일 에러
+     */
     private static void sendIndex(File directory, PrintWriter outgoing) throws Exception {
         String[] fileList = directory.list();
         for (int i = 0; i < fileList.length; i++)
@@ -117,9 +123,16 @@ public class Quiz5 {
         outgoing.flush();
         outgoing.close();
         if (outgoing.checkError())
-            throw new Exception("Error while transmitting data.");
+            throw new Exception("Error");
     }
 
+    /***
+     * 파일 전송
+     * @param fileName 파일이름
+     * @param directory 폴더
+     * @param outgoing 보내는쪽
+     * @throws Exception 파일에러
+     */
     private static void sendFile(String fileName, File directory, PrintWriter outgoing) throws Exception {
         File file = new File(directory, fileName);
         if ((!file.exists()) || file.isDirectory()) {
@@ -138,6 +151,6 @@ public class Quiz5 {
         outgoing.flush();
         outgoing.close();
         if (outgoing.checkError())
-            throw new Exception("Error while transmitting data.");
+            throw new Exception("Erro");
     }
 }

@@ -5,6 +5,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/***
+ * LinkedBlockingQueue
+ * ConcurrentLinkedQueue 이용
+ */
 public class Quiz3 {
     public Quiz3() {
         new ThreadTest3();
@@ -20,6 +24,10 @@ class ThreadTest3 {
     private static final int RANGE = 10000;
     private static int maxDivisors = 0;
     private static int maxDivisorsIndex = 0;
+
+    /***
+     * 결과를 담을 클래스
+     */
     private static class Result {
 
         private int divisorCount;
@@ -38,7 +46,12 @@ class ThreadTest3 {
             return maxDivisorsCountNumber;
         }
     }
-        private static class Task extends Thread {
+
+
+    /***
+     * 쓰레드 TASK
+     */
+    private static class Task extends Thread {
             private int start;
             private int end;
 
@@ -48,7 +61,10 @@ class ThreadTest3 {
             }
 
 
-            public void compute() {
+        /***
+         * 약수 갯수
+         */
+        public void compute() {
 
                 for (int i = start; i <= end; i++) {
                     int cnt = divisorSize(i);
@@ -61,6 +77,7 @@ class ThreadTest3 {
                 }
             }
         }
+
     private static class CountDivisorsThread extends Thread {
         public void run() {
             while (true) {

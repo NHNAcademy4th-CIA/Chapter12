@@ -4,6 +4,9 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/***
+ * 약수 쓰레드
+ */
 public class Quiz2 {
     public Quiz2() {
         new ThreadTest2();
@@ -16,6 +19,9 @@ class ThreadTest2 {
     private static int maxDivisors = 0;
     private static int maxDivisorsIndex = 0;
 
+    /***
+     * 약수구하는 쓰레드
+     */
     private static class CountDivisrThread extends Thread {
         private int start;
         private int end;
@@ -25,6 +31,9 @@ class ThreadTest2 {
             this.end = end;
         }
 
+        /***
+         * 약수중 가장큰거
+         */
         public void run() {
 
             for (int i = start; i <= end; i++) {
@@ -38,6 +47,11 @@ class ThreadTest2 {
         }
     }
 
+    /***
+     * 약수 구하기
+     * @param max
+     * @return
+     */
     private static int divisorSize(int max) {
         int count = 0;
         for (int i = 1; i <= max; i++) {

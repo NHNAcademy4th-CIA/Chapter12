@@ -3,6 +3,9 @@ package org.nhnacademy.leejungbum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/***
+ * 과연 쓰레드 실행시 원하는대로 결과가 나올것인가?
+ */
 public class Quiz1 {
     private static Logger logger = LoggerFactory.getLogger(Quiz1.class);
 
@@ -30,6 +33,9 @@ public class Quiz1 {
 
 }
 
+/***
+ * 사용자 정의 쓰레드. 100번반복
+ */
 class customThread extends Thread {
     public void run() {
         for (int i = 0; i < 100; i++) {
@@ -38,6 +44,9 @@ class customThread extends Thread {
     }
 }
 
+/***
+ * 더하기
+ */
 class Counter {
     private static int count;
 

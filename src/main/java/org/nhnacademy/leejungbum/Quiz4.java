@@ -5,6 +5,9 @@ import java.util.concurrent.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/***
+ * Callable 응용
+ */
 public class Quiz4 {
     public Quiz4() {
         new ThreadTest4();
@@ -32,6 +35,10 @@ class ThreadTest4 {
             return divisorCountIndex;
         }
     }
+
+    /***
+     * 쓰레드
+     */
     private static class Task implements Callable<Result> {
         private int start;
         private int end;
@@ -42,6 +49,10 @@ class ThreadTest4 {
         }
 
 
+        /***
+         * divisor
+         * @return 새로운 쓰레드
+         */
         public Result call() {
             int maxDivisors = 0;
             int whichInt = 0;
@@ -55,6 +66,12 @@ class ThreadTest4 {
             return new Result(maxDivisors,whichInt);
         }
     }
+
+    /***
+     * 약수 갯수
+     * @param max 입력 값
+     * @return 약수 갯수
+     */
     private static int divisorSize(int max) {
         int count = 0;
         for (int i = 1; i <= max; i++) {

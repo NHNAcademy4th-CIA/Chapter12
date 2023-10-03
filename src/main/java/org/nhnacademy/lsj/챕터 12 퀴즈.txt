@@ -1,0 +1,225 @@
+Question 1:
+
+Write a complete subclass of Thread to represent a thread that writes out the
+numbers from 1 to 10. Then write some code that creates and starts a thread belonging to that class.
+
+
+
+class countThread extends Thread {
+
+
+    public void run() {
+        for(int i=1;i<=10;i++)
+            sout(i);
+    }
+}
+
+countThread thread = new countThread();
+
+thread.run();
+
+
+
+Question 2:
+
+Suppose that thrd is an object of type Thread. Explain the difference between
+calling thrd.start() and calling thrd.run().
+
+
+start 와 run 모두 thread를 실행하기 위해서 사용되는 메서드임
+
+차이점은 run같은 경우에는 해당 스레드가 그대로 실행되고 run이 끝나면 종료되는 것에 비해
+
+start는 스레드를 실행하기위해 새로운 스레드를 만들어 run메서드를 실행하게 함
+
+즉 start가 실행 되면 두 개의 thread가 있는 상태
+
+이렇게 새 thread는 이미 존재하는 thread와 함께 병렬로 실행이 된다.
+
+이로서 병렬성과 불확정성이 생김
+
+
+Question 3:
+
+What is a race condition?
+
+
+parallel programing 에서는 multi thread가 사용됨
+
+이 thread는 shared resources를 가지는데
+
+이 공유 자원에 대해서 동시에 Access가 발생할 때
+
+순서가 결과값에 영향을 줄 수 있는 상태를 의미함
+
+
+
+
+
+Question 4:
+
+How does synchronization prevent race conditions,
+and what does it mean to say that synchronization only provides mutual exclusion?
+
+
+
+synchronization 을 명시해주면 이 resources에 대해서 process가 access 중이라면
+
+다른 process들은 해당 공유자원에 access 할 수 없어진다.
+
+즉 동시에 접근해서는 안되는 공유 자원임을 명시하는 것
+
+근데 얘는 완벽하게 exclusive access 를 보장하지 않아
+
+if문같은 조건을 사용하면 다른 thread와 동시에 작업이 일어날수도 있기 떄문
+
+따라서 Synchronized 는 mutual exclusion 만 제공함
+
+
+
+
+Question 5:
+
+Suppose that a program uses a single thread that takes 4 seconds to run.
+
+ Now suppose that the program creates two threads and divides the same work between the two threads.
+
+ What can be said about the expected execution time of the program that uses two threads?
+
+
+2초가 될 것입니다.
+
+단일 작업으로 시행할때 4초가 걸렸기 떄문에 이를 절반으로 동일한 작업을 시행하면
+각 작업당 2초가 걸릴 것 입니다.
+
+
+
+
+
+Question 6:
+
+What is an ArrayBlockingQueue and how does it solve the producer/consumer problem?
+
+
+만약 초당 2개의 작업이 만들어지는데 , 초당 1개의 작업만 수행 가능하다면
+
+계속해서 작업이 쌓일 것이고 , 이는 문제를 야기할 수 있습니다 .
+
+
+따라서 생산자 , 소비자 문제에서는  대기열이 필요합니다.
+
+대기열에 생산자가 생산하는 작업을 추가하고
+
+소비자가 작업을 수행가능한 상태일떄 대기열에서 작업을 뺴와 소비자에게 전달합니다.
+
+이것을 ArrayBlockingQueue 로 구현하여 문제를 해결합니다.
+
+
+
+Question 7:
+
+What is a thread pool?
+
+
+multi thread를 사용할 떄는 작업을 쪼개서 나눠준다.
+
+이때 쪼개진 작업을 수행할 thread가 필요함
+
+근데 처리해야할 작업이 많다면 어쩔래?
+
+매번 새로운 thread를 만들어서 쓰면 overhead때문에 배보다 배꼽이 더 커질수도 있음
+
+따라서 좋은 방법은 몇 개의 스레드만 생성하고 , 각 스레드가 여러 작업을 실행하도록 하는 것임
+
+Thread pool 안에 모든 스레드가 작업 중이면 , idle 한 상태가 될 때 까지 기다렸다가 작업 수행 함
+
+
+
+
+
+Question 8:
+
+Network server programs are often multithreaded. Explain what this means and why it is true.
+
+
+I/O Blocking 이 발생할떄 , Single Thread면 , 계속해서 사용자의 입력을 기다려야 해
+
+이건 너무 비효율적이야 , 따라서 멀티스레드로 만들어 놓으면 사용자의 입력을 받는 스레드 , 다른 작업을 하는 스레드
+
+이런식으로 나눌 수 있음
+
+또 여러명의 클라이언트가 서버에 요청을 할떄에도 멀티스레드면 동시에 처리가 가능해
+
+
+
+Question 9:
+
+Why does a multithreaded network server program often use many times more threads
+than the number of available processors?
+
+만약 I/O Blocking 이 발생한다면 여러 thread들이 응답을 기다리기 위해 Blocking 될 수도 있음
+따라서 차단되지 않은 스레드끼리만 경쟁하게 됨 , 그렇기에 애초에 프로세서 보다 더 많은 스레드를 둠으로써
+
+프로세서당 하나의 스레드를 갖게 한다.
+
+프로세서 : CPU같은 하드웨어
+프로세스 : 메모리에 적재되어 프로세서에 의해 실행 중인 프로그램
+쓰레드  : 프로세스 내애서 작업을 수행하는 주체  , 프로세스 실행의 단위
+모든 프로세스는 한 개 이상의 스레드가 존재하여 작업을 수행 함
+
+
+
+Question 10:
+
+Consider the ThreadSafeCounter example from Subsection 12.1.3:
+
+public class ThreadSafeCounter {
+
+   private int count = 0;  // The value of the counter.
+
+   synchronized public void increment() {
+      count = count + 1;
+   }
+
+   synchronized public int getValue() {
+      return count;
+   }
+
+}
+The increment() method is synchronized so that the caller of the method
+can complete the three steps of the operation "Get value of count," "Add 1 to value," "
+Store new value in count" without being interrupted by another thread.
+But getValue() consists of a single, simple step.
+ Why is getValue() synchronized? (This is a deep and tricky question.)
+
+
+ 스레드는 공유 데이터를 캐시 하도록 돼있다.
+
+ 따라서 getValue를 통해 그냥 값을 꺼내오면 변경된 값을 반환하는 것이 아닌
+
+ 변경되기 이전의 값을 가져올 수 있다.
+
+ 따라서 동기화를 시켜 , 변경사항이 즉시 적용되도록 바꿔야 한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

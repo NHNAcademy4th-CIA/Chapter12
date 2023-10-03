@@ -8,6 +8,9 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * thread pool 관리하기 쉽게 만들어주는 ExecutorService, Futures interface 사용.
+ */
 public class Problem4 {
 
     private static final Logger logger = LoggerFactory.getLogger(Problem4.class);
@@ -73,7 +76,11 @@ public class Problem4 {
     }
 
 
-    public static void main(String[] args) {
+    /**
+     * thread pool에 thread는 총 20개 , 실제로 만든 task는 10개.
+     * executor 에 submit 함 -> shutdown 으로 thread pool 종료 -> 정해지지 않은 값 Future 통해서 꺼내옴 -> 출력.
+     */
+    public static void problem4() {
 
         long start = System.currentTimeMillis();
 
@@ -90,6 +97,7 @@ public class Problem4 {
 
         executor.shutdown();
 
+
         int number = 0;
         int divisorCount = 0;
 
@@ -102,7 +110,6 @@ public class Problem4 {
                 logger.warn("{}", e.getMessage());
             }
         }
-
 
 
         long elapsedTime = System.currentTimeMillis() - start;

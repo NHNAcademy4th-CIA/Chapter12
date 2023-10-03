@@ -13,6 +13,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 클라이언트로 부터 request 받는 Server . Multi Thread 지원해서 , 여러개의 request 처리 가능.
+ */
 public class Server {
 
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
@@ -24,6 +27,12 @@ public class Server {
     private static ArrayBlockingQueue<Socket> connectionQueue;
 
 
+    /**
+     * ArrayBlockingQueue 사용 -> 대기열 크기 정함 -> thread pool 에 thread는 5개.
+     * 5개 클라이언트 한번에 받기 가능 -> 그 이후 부터는 Queue에 쌓임 .
+     *
+     * @param args Comand Line.
+     */
     public static void main(String[] args) {
 
         connectionQueue = new ArrayBlockingQueue<>(10);
@@ -139,7 +148,8 @@ public class Server {
         public void run() {
 
             while (true) {
-                Socket socket = null;
+
+                Socket socket;
                 try {
                     socket = connectionQueue.take();
                     sendData(socket);

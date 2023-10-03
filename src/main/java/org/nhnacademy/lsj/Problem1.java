@@ -5,11 +5,17 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 동기화 시키지 않은 프로그램이 오류가 나는지 체크하는 프로그램.
+ */
 public class Problem1 {
 
     private static final Logger logger = LoggerFactory.getLogger(Problem1.class);
     private static final Scanner sc = new Scanner(System.in);
 
+    /**
+     * nested class , count 로 숫자 샘.
+     */
     private static class Counter {
         private int count;
 
@@ -36,6 +42,9 @@ public class Problem1 {
 
     private static final Counter counter = new Counter();
 
+    /**
+     * COunt 할 thread class .
+     */
     private static class CountThread extends Thread {
 
         public void run() {  // The run method prints a message to standard output.
@@ -47,6 +56,9 @@ public class Problem1 {
     }
 
 
+    /**
+     * 사용할 스레드 수 입력 -> 카운터 증가시킬 횟수 입력 -> 동기화 여부 -> 실행.
+     */
     public static void protlbm1() {
 
 
@@ -70,6 +82,11 @@ public class Problem1 {
 
     }
 
+    /**
+     * 숫자 입력받음 , 유효한지 체크.
+     *
+     * @return 입력받은 숫자 반환.
+     */
     public static int getNumber() {
 
         int num = 0;
@@ -83,6 +100,11 @@ public class Problem1 {
         return num;
     }
 
+    /**
+     * join 으로 유사 동기화 시켰음 , 이걸로 count하면 차례대로 실행 됨.
+     *
+     * @param countThreads thread 배열 .
+     */
     public static void synchronizedCount(CountThread[] countThreads) {
 
 
@@ -97,6 +119,11 @@ public class Problem1 {
         }
     }
 
+    /**
+     * 동기화없이 그냥 access함 , 정상적인 값 안나옴.
+     *
+     * @param countThreads thread 배열.
+     */
     public static void nonSynchronizedCount(CountThread[] countThreads) {
 
         for (int i = 0; i < countThreads.length; i++) {

@@ -5,6 +5,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 이전 문제의 연장선 Queue 2개를 사용 , 작업을 저장하는 task queue , 결과를 저장하는 result queue.
+ */
 public class Problem3 {
 
 
@@ -88,6 +91,12 @@ public class Problem3 {
     }
 
 
+    /**
+     * thread는 10개 , problem2와 동일 , task queue에 task 10개 집어넣음 .
+     * thread size 줄이면 실제로 느려짐 , parallel하지 못하게 되는거니까.
+     * 여기서도 thread pool에 thread10개 있는거 .
+     * thread start 되면 resulut queue에 결과 담김.
+     */
     public static void problem3() {
 
 
@@ -107,21 +116,21 @@ public class Problem3 {
             taskQueue.add(new Task(1 + (UNIT * i), UNIT * (i + 1)));
         }
 
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < workers.length; i++) {
             workers[i].start();
         }
 
 
-        int maxDivisorCount = 0;         // Over maximum found by any task.
-        int intWithMaxDivisorCount = 0;  // Which integer gave that maximum?
+        int divisorCount = 0;
+        int number = 0;
 
 
         for (int i = 0; i < SIZE; i++) {
             try {
                 Result result = resultQueue.take();
-                if (result.getMaxDivisorsCountNumber() > maxDivisorCount) { // new maximum.
-                    maxDivisorCount = result.getMaxDivisorsCountNumber();
-                    intWithMaxDivisorCount = result.getDivisorCount();
+                if (result.getMaxDivisorsCountNumber() > divisorCount) { // new maximum.
+                    divisorCount = result.getMaxDivisorsCountNumber();
+                    number = result.getDivisorCount();
                 }
             } catch (InterruptedException e) {
                 logger.warn("{}", e.getMessage());
@@ -130,7 +139,7 @@ public class Problem3 {
 
         long elapsedTime = System.currentTimeMillis() - startTime;
         logger.info("Total elapsed time : {}  seconds", elapsedTime / 1000.0);
-        logger.info("가장 제수 많은 정수 {} \n 이 정수의 제수 개수 {}", maxDivisorCount, intWithMaxDivisorCount);
+        logger.info("가장 제수 많은 정수 {} \n 이 정수의 제수 개수 {}", divisorCount, number);
 
 
     }

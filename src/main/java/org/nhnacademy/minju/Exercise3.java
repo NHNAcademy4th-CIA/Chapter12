@@ -15,7 +15,7 @@ public class Exercise3 {
     private static ConcurrentLinkedDeque<Task> taskQueue;
     private static LinkedBlockingDeque<Result> resultQueue;
     private static final Logger logger = LoggerFactory.getLogger(Exercise3.class);
-    private static final int START = 10_0000;
+    private static final int RANGE = 10_0000;
 
     private static class Task implements Runnable {
         int maxDivisorNumber;
@@ -92,7 +92,7 @@ public class Exercise3 {
 
     private static void countDivisorWithThreads(int numberOfThreads) {
         logger.info("\nCounting divisor between {} and {} using {} threads",
-                1, START, numberOfThreads);
+                1, RANGE, numberOfThreads);
         long startTime = System.currentTimeMillis();
         resultQueue = new LinkedBlockingDeque<>();
         taskQueue = new ConcurrentLinkedDeque<>();
@@ -104,10 +104,8 @@ public class Exercise3 {
         }
 
         // 대기열에 작업을 추가
-        int perThread = START / numberOfThreads;
-
-        for (int i = 0; i < START; i++) {
-            taskQueue.add(new Task(1 + perThread * i, perThread * (i + 1)));
+        for (int i = 0; i < RANGE; i++) {
+            taskQueue.add(new Task(1 + RANGE * i, RANGE * (i + 1)));
         }
 
         for (int i = 0; i < numberOfThreads; i++) {
@@ -139,7 +137,7 @@ public class Exercise3 {
         Scanner sc = new Scanner(System.in);
         int numberOfThreads;
         do {
-            logger.info("스레드 개수 : ");
+            logger.info("스레드 개수를 입력하세요. 0 미만이면 종료됩니다.");
             numberOfThreads = sc.nextInt();
             countDivisorWithThreads(numberOfThreads);
 

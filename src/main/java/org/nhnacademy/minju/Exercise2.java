@@ -10,16 +10,16 @@ import org.slf4j.LoggerFactory;
  */
 public class Exercise2 {
     private static final Logger logger = LoggerFactory.getLogger(Exercise2.class);
-    private static final int START = 10_0000;
+    private static final int RANGE = 10_0000;
 
     /**
      * run에서 제수가 가장 많은 정수를 찾는다
      */
-    private static class CountDivisorThread extends Thread {
-        int maxDivisorNumber;
-        int maxDivisor;
-        int min;
-        int max;
+    public static class CountDivisorThread extends Thread {
+        private int maxDivisorNumber;
+        private int maxDivisor;
+        private int min;
+        private int max;
 
         public CountDivisorThread(int min, int max) {
             this.min = min;
@@ -70,13 +70,12 @@ public class Exercise2 {
      */
     private static void countDivisorWithThreads(int numberOfThreads) {
         logger.info("\nCounting divisor between {} and {} using {} threads",
-                1, START, numberOfThreads);
+                1, RANGE, numberOfThreads);
         long startTime = System.currentTimeMillis();
         CountDivisorThread[] worker = new CountDivisorThread[numberOfThreads];
-        int perThread = START / numberOfThreads;
 
         for (int i = 0; i < numberOfThreads; i++) {
-            worker[i] = new CountDivisorThread(1 + perThread * i, perThread * (i + 1));
+            worker[i] = new CountDivisorThread(1 + RANGE * i, RANGE * (i + 1));
             worker[i].start();
         }
         for (int i = 0; i < numberOfThreads; i++) {

@@ -18,13 +18,10 @@ public class Exercise1 {
     private static class Counter {
         private int count;
 
-        protected void inc() {
+        private void inc() {
             count = count + 1;
         }
 
-        protected int getCount() {
-            return count;
-        }
     }
 
     private static class IncrementThread extends Thread {
@@ -73,7 +70,7 @@ public class Exercise1 {
             }
 
             logger.info("result : {}", increment * threadNumber);
-            logger.info("count : {}", counter.getCount());
+            logger.info("count : {}", counter.count);
         } catch (InputMismatchException e) {
             logger.warn("{}", e.getMessage());
         }

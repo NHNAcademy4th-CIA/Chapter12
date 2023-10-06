@@ -1,0 +1,138 @@
+= Chapter 12 프로그래밍 문제 및 퀴즈 정의
+
+=== link:https://math.hws.edu/javanotes/c12/exercises.html[Programing Exercise For Chapter 12]
+
+=== link:https://math.hws.edu/javanotes/c12/quiz.html[Quiz on Chapter 12]
+
+---
+
+==  Chapter 12 Quiz
+
+* Question 2:
+
+Suppose that thrd is an object of type Thread.
+
+Explain the difference between calling thrd.start() and calling thrd.run().
+
+.Answer
+[%collapsible%open]
+====
+
+start는 새 thread를 만들어서 run메서드를 실행시킵니다 .
+
+따라서 multi thread를 이용하게 됩니다.
+
+run메서드는 새 thread를 만들어 메서드를 실행시키는 것이 아닌
+
+일반 메서드와 같이 해당 run메서드를 호출해 실행시킵니다.
+
+따라서 single thread의 역할입니다.
+
+====
+
+* Question 3:
+
+What is a race condition?
+
+.Answer
+[%collapsible%open]
+====
+multi thread환경에서 shared resources 를 access 할 때 생기는 경쟁을 의미합니다.
+
+이것을 방지하려면 Synchornized 를 이용해 resources에 대한 access를 parallel하지 못하게 만듭니다.
+
+====
+
+
+* Question 7:
+
+What is a thread pool?
+
+.Answer
+[%collapsible%open]
+====
+
+사용할 thread를 정해 모아둔 것을 의미합니다.
+
+사용할 thread를 미리 정의해 놓는 이유는 매번 새로운 thread를 생성할시에
+
+overhead와 같은 issue 때문에 성능이 더욱 느려집니다.
+
+====
+
+
+* Question 9:
+
+Why does a multithreaded network server program
+
+often use many times more threads than the number of available processors?
+
+.Answer
+[%collapsible%open]
+====
+I/O Blocking 같은 issue 때문입니다.
+
+예를 들어 사용자의 입력을 받아야하는 thread는
+
+사용자가 입력을 하기 전까지 무한히 대기하게 됩니다.
+
+따라서 이런 경우에는 thread를 사용하고 있지만 실질적으로는 사용의
+
+의미가 없는 상태가 됩니다.
+
+따라서 I/O Blocking 이 여러개 생기게 된다면
+
+차단되지 않는 thread들 끼리만 경쟁하게 됩니다.
+
+따라서 더 많은 여분의 thread를 둬서 프로그램이 원할하게
+
+실행되도록 만듭니다.
+
+====
+
+
+* Question 10:
+
+Consider the ThreadSafeCounter example from Subsection 12.1.3:
+
+[source,java]
+----
+public class ThreadSafeCounter {
+
+   private int count = 0;  // The value of the counter.
+
+   synchronized public void increment() {
+      count = count + 1;
+   }
+
+   synchronized public int getValue() {
+      return count;
+   }
+
+}
+----
+
+
+The increment() method is synchronized so that the caller of the method can complete the three steps of the operation "Get value of count," "Add 1 to value," "Store new value in count" without being interrupted by another thread.
+
+But getValue() consists of a single, simple step. Why is getValue() synchronized?
+
+(This is a deep and tricky question.)
+
+
+.Answer
+[%collapsible%open]
+====
+thread는 cache를 가집니다 .
+
+그렇기 떄문에 main memory에 있는 resources에 변화를 즉각적으로 반영하지 못할수 있습니다.
+
+따라서 getValue와 같이 간단한 연산이더라도
+
+꺼내는 시점에서 값의 변화를 반영하지 못할 수 있기 때문에
+
+synchronized 를 이용해 줘야 합니다.
+
+====
+
+

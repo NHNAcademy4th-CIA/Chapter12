@@ -9,7 +9,7 @@ public class Main {
         //Problem1.protlbm1();
         //Problem2.problem2();
         //Problem3.problem3();
-        //Problem4.problem4();
+        Problem4.problem4();
 
     }
 

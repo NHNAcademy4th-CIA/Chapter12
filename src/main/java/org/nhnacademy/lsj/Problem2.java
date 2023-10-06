@@ -32,6 +32,10 @@ public class Problem2 {
 
         public void run() {
 
+            for(int i=0;i<100;i++){
+                System.out.println(10);
+            }
+
             for (int i = start; i <= end; i++) {
 
                 int cnt = countDivisor(i); // 1부터 i까지의 약수 개수

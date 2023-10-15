@@ -39,15 +39,14 @@ public class Quiz5 {
 
         try {
             listener = new ServerSocket(LISTENING_PORT);
-            System.out.println("Listening on port " + LISTENING_PORT);
+            logger.info("Listening on port {}", LISTENING_PORT);
             while (true) {
                 connection = listener.accept();
                 connectionQueue.add(connection);
             }
         } catch (Exception e) {
-            System.out.println("Server shut down unexpectedly.");
-            System.out.println("Error:  " + e);
-            return;
+            logger.info("Server shut down unexpectedly.");
+            logger.info("Error:  {}", e);
         }
 
     }  // end main()
@@ -70,6 +69,7 @@ public class Quiz5 {
                     Socket connection = connectionQueue.take();
                     handleConnection(directory, connection);
                 } catch (Exception e) {
+                    logger.error(e.toString());
                 }
             }
         }

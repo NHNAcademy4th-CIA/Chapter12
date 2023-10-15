@@ -82,6 +82,9 @@ class ThreadTest4 {
         return count;
     }
 
+    /***
+     * 약수의 개수를 구하는 테스트
+     */
     public ThreadTest4() {
 
         long start = System.currentTimeMillis();

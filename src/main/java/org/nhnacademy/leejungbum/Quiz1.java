@@ -23,6 +23,7 @@ public class Quiz1 {
             try {
                 workers[i].join();
             } catch (InterruptedException e) {
+                logger.error(e.toString());
             }
         }
 

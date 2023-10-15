@@ -37,7 +37,7 @@ class ThreadTest2 {
         public void run() {
 
             for (int i = start; i <= end; i++) {
-                int cnt = divisorSize(i);
+                int cnt = divisor(i);
                 if (maxDivisors < cnt) {
                     maxDivisors = cnt;
                     maxDivisorsIndex = i;
@@ -52,7 +52,7 @@ class ThreadTest2 {
      * @param max
      * @return
      */
-    private static int divisorSize(int max) {
+    private static int divisor(int max) {
         int count = 0;
         for (int i = 1; i <= max; i++) {
             if (max % i == 0) {

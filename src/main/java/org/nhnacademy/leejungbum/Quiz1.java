@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Quiz1 {
     private static Logger logger = LoggerFactory.getLogger(Quiz1.class);
-
+    private static final int numberOfThreads = 100;
+    private static final int numberOfIncrements = 100;
     public Quiz1() {
-        int numberOfThreads = 100;
-        int numberOfIncrements = 100;
+
         customThread[] workers = new customThread[numberOfThreads];
         Counter counter = new Counter();
         for (int i = 0; i < numberOfThreads; i++)
@@ -57,4 +57,6 @@ class Counter {
     public static int getCount() {
         return count;
     }
+
+
 }
